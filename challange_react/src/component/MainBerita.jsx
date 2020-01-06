@@ -2,13 +2,13 @@ import React from 'react'
 import '../styles/bootstrap.min.css'
 
 
-function MainBerita(judulBerita, isiBerita, lastUpdated) {
+function MainBerita(imagePath,judulBerita, isiBerita, lastUpdated) {
     return (
 
         // using card for main content
-        <div className='row mb-4'>
+        <div className='row mb-4 p-0'>
             <div class="card">
-                <img class="card-img-top" src={require("../images/image1.jpeg")}/>
+                <img class="card-img-top" src={imagePath}/>
                 <div class="card-body">
                     {/* title */}
                     <h3 class="card-title font-weight-bold">{judulBerita}</h3>
@@ -43,16 +43,19 @@ function MainBerita(judulBerita, isiBerita, lastUpdated) {
 
 let lstBerita = [
     {
+        path : require("../images/image1.jpeg"),
         judul : 'judul1',
         isi : 'isi1',
         updated : 'updated1'
     },
     {
+        path : require("../images/image2.jpeg"),
         judul : 'judul2',
         isi : 'isi2',
         updated : 'updated2'
     },
     {
+        path : require("../images/image3.jpeg"),
         judul : 'judul3',
         isi : 'isi3',
         updated : 'updated3'
@@ -60,7 +63,7 @@ let lstBerita = [
 ]
 
 const CallBerita = lstBerita.map((obj) =>(
-    MainBerita(obj.judul,obj.isi,obj.updated)
+    MainBerita(obj.path, obj.judul, obj.isi, obj.updated)
 ))
 
 class RenderMainBerita extends React.Component {
