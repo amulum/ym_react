@@ -1,8 +1,7 @@
 import React from 'react'
 import Header from '../component/Header'
-import MainBerita from '../component/MainBerita'
 import BeritaTerkini from  '../component/BeritaTerkini'
-
+import News from './News'
 class Home extends React.Component {
     render() {
         return (
@@ -16,7 +15,7 @@ class Home extends React.Component {
                             <BeritaTerkini/>
                         </div>
                         <div className="col-md-8 mr-0">
-                            <MainBerita/>
+                            <News/>
                         </div>
                     </div>
                 </div>
