@@ -4,12 +4,16 @@ import Search from './Search';
 import {Link} from 'react-router-dom'
 
 class Header extends React.Component {
-
+    postSignout = () => {
+        localStorage.removeItem("is_login");
+        // localStorage.clear()
+        this.props.history.push("/");
+      };
 	render() {
         const loopnav = this.props.lstCategory.map(category => (
             <li class="nav-item">
-                <Link className="nav-link" to={`/category/${category}`}>
-                    <a  onClick={() => this.props.cobaClick(category)}>{category}</a>
+                <Link className="nav-link" to={`/category/${category}`} onClick={() => this.props.cobaClick(category)}>
+                    {category}
                 </Link>
             </li>
         ))
@@ -42,13 +46,15 @@ class Header extends React.Component {
 							</div>
 						</li>
 					</ul>
-					<Search/>
+					<Search
+                        {...this.props}
+                    />
 					<ul class='navbar-nav ml-auto'>
 						<li class="nav-item">
 							<Link to="/sign-in" className="nav-link">Sign In</Link>
 						</li>
 						<li class="nav-item">
-                            <Link to="/sign-out" className="nav-link">Sign Out</Link>
+                            <Link onClick={this.postSignout} className="nav-link">Sign Out</Link>
 						</li>
 					</ul>
 				</div>
