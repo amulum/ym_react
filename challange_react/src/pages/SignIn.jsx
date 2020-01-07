@@ -59,6 +59,7 @@ class SignIn extends React.Component {
                 <div className="container-fluid">
                     <div className="row">
                         <Header 
+                            {...this.props}
                             lstCategory={this.state.catHeader} 
                             cobaClick={this.cobaClick}
                             keyword={this.state.search}

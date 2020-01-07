@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/bootstrap.min.css'
 import Search from './Search';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 
 class Header extends React.Component {
     postSignout = () => {
@@ -9,6 +9,18 @@ class Header extends React.Component {
         // localStorage.clear()
         this.props.history.push("/");
       };
+    clickProfile = async () => {
+        try {
+            let is_login  = JSON.parse(localStorage.getItem("isLogin"));
+            if (is_login) {
+                this.props.history.push("/profile")   
+        }}
+         catch (error) {
+            console.error(error);
+            alert('LOGIN BOS')
+            }
+        }
+
 	render() {
         const loopnav = this.props.lstCategory.map(category => (
             <li class="nav-item">
@@ -52,6 +64,9 @@ class Header extends React.Component {
 					<ul class='navbar-nav ml-auto'>
 						<li class="nav-item">
 							<Link to="/sign-in" className="nav-link">Sign In</Link>
+						</li>
+						<li class="nav-item">
+							<Link onClick={this.clickProfile} className="nav-link">Profile</Link>
 						</li>
 						<li class="nav-item">
                             <Link onClick={this.postSignout} className="nav-link">Sign Out</Link>
