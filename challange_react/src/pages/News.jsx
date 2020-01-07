@@ -2,20 +2,36 @@ import React from 'react'
 import axios from 'axios'
 import MainBerita from '../component/MainBerita'
 
-const apiKey = '7419a8308dcc44f987be1f6b8b402b63'
+const apiKey = '9ea283ba45c54460a0d372ae2612c6bd'
 const baseUrl = 'https://newsapi.org/v2/'
 const urlHeadline = baseUrl; 
 
 class News extends React.Component {
     state = {
         listNews : [],
-        isLoading : true,
-        category : 'entertainment'
+        isLoading : true
     }
-    componentDidMount = () => {
+
+    componentWillReceiveProps = (props) => {
+        const self = this;
+        self.setState({isLoading :props.isLoading})
+        axios
+        .get(`${baseUrl}/everything?q=${props.selectedCategory}&sortBy=popularity&pageSize=5&apiKey=${apiKey}`)
+        .then(function(response) {
+            self.setState ({ listNews: response.data.articles, isLoading: false});
+            // handle success
+            console.log(self.state.listNews)
+        })
+        .catch(function(error){
+            self.setState({ isLoading : false});
+            // error handle
+        })
+    }
+
+        componentDidMount = () => {
         const self = this;
         axios
-        .get(`${baseUrl}/everything?q=${this.state.category}&sortBy=popularity&pageSize=10&apiKey=${apiKey}`)
+        .get(`${baseUrl}/everything?q=${self.props.selectedCategory}&sortBy=popularity&pageSize=5&apiKey=${apiKey}`)
         .then(function(response) {
             self.setState ({ listNews: response.data.articles, isLoading: false});
             // handle success

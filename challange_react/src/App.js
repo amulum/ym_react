@@ -5,11 +5,16 @@ import Home from './pages/Home'
 import Header from './component/Header'
 import BeritaTerkini from './component/BeritaTerkini'
 import MainBerita from './component/MainBerita'
+import MainRoute from "./Routes/MainRoute"
 
-function App() {
-  return (
-    <Home />
-  );
+class App extends React.Component {
+    render() {
+        return (
+            <div className='App'>
+                <MainRoute />
+            </div>
+        )
+    }
 }
 
 export default App;

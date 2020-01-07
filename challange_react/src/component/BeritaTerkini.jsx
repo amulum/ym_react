@@ -1,7 +1,8 @@
 import React from 'react'
 import '../styles/bootstrap.min.css'
 import axios from 'axios'
-const apiKey = '7419a8308dcc44f987be1f6b8b402b63'
+
+const apiKey = '9ea283ba45c54460a0d372ae2612c6bd'
 const baseUrl = 'https://newsapi.org/v2/'
 const urlHeadline = baseUrl; 
 
@@ -39,7 +40,7 @@ class BeritaTerkini extends React.Component {
         // logic loop untuk tiap berita yang akan ditampilkan
         const loopBerita = listNews.map((item, index)=> (
             <a href="#" style={{textDecoration:'None'}}>
-                <li class="list-group-item text-secondary">
+                <li class="list-group-item text-secondary text-left">
                     <span class="badge badge-pill badge-danger">#{index+1}</span>
                     <span className='d-block'>{item.title}</span>
                 </li>
