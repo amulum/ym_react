@@ -44,15 +44,17 @@ class SignIn extends React.Component {
         console.log(this.props.isLogin)
         if (this.props.isLogin){
             return (
-                <div className="container-fluid">
-                    <div className="row">
-                            <Header 
-                                lstCategory={this.props.catHeader} 
-                                cobaClick={this.props.cobaClick}/>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-7 d-flex justify-content-center">
-                            <h2>KAMU SUDAH LOGIN</h2>
+                <div>
+                    <div className="container-fluid">
+                        <Header 
+                            lstCategory={this.props.catHeader} 
+                            cobaClick={this.props.cobaClick}/>
+                        </div>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-md-7 d-flex justify-content-center">
+                                <h2>KAMU SUDAH LOGIN</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -60,45 +62,48 @@ class SignIn extends React.Component {
         } 
         else {
             return (
-                <React.Fragment>
+                <div>
                     <div className="container-fluid">
                         <div className="row">
                             <Header 
                                 lstCategory={this.props.catHeader} 
                                 cobaClick={this.props.cobaClick}/>
                         </div>
-                    <div className="row">
-                        <div className="col-8">
-                            <form class="px-4 py-3" onSubmit={ele => ele.preventDefault()}>
-                                <div class="form-group">
-                                <label for="exampleDropdownFormEmail1">Email address</label>
-                                <input 
-                                    type="email" 
-                                    class="form-control" 
-                                    placeholder="email@example.com"
-                                    name="email"
-                                    onChange={ele => this.inputForm(ele)}/>
-                                </div>
-                                <div class="form-group">
-                                <label for="exampleDropdownFormPassword1">Password</label>
-                                <input 
-                                    type="password" 
-                                    class="form-control" 
-                                    placeholder="Password"
-                                    name = "password"
-                                    onChange={ele => this.inputForm(ele)}/>
-                                </div>
-                                <button 
-                                    type="submit"   
-                                    class="btn btn-primary" 
-                                    onClick={this.postLogin}>
-                                    Sign in
-                                </button>
-                            </form>
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-8">
+                                <form class="px-4 py-3" onSubmit={ele => ele.preventDefault()}>
+                                    <div class="form-group">
+                                    <label for="exampleDropdownFormEmail1">Email address</label>
+                                    <input 
+                                        type="email" 
+                                        class="form-control" 
+                                        placeholder="email@example.com"
+                                        name="email"
+                                        onChange={ele => this.inputForm(ele)}/>
+                                    </div>
+                                    <div class="form-group">
+                                    <label for="exampleDropdownFormPassword1">Password</label>
+                                    <input 
+                                        type="password" 
+                                        class="form-control" 
+                                        placeholder="Password"
+                                        name = "password"
+                                        onChange={ele => this.inputForm(ele)}/>
+                                    </div>
+                                    <button 
+                                        type="submit"   
+                                        class="btn btn-primary" 
+                                        onClick={this.postLogin}>
+                                        Sign in
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                         </div>
                     </div>
-                 </div>
-                </React.Fragment>
+                </div>
+
             )
 
         }

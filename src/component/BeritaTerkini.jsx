@@ -1,6 +1,10 @@
 import React from 'react'
 import '../styles/bootstrap.min.css'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
+import { withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
+import { actions, store } from "../store";
 
 const apiKey = '9ea283ba45c54460a0d372ae2612c6bd'
 const baseUrl = 'https://newsapi.org/v2/'
@@ -56,7 +60,9 @@ class BeritaTerkini extends React.Component {
                             BERITA TERKINI                            
                         </span>
                         <span className='font-smaller ml-lg-auto text-info'>
-                            <a href="#" style={{textDecoration:'None'}}>lihat semua</a> 
+                            <Link to="/not-match" style={{textDecoration:'None'}}>
+                                lihat semua
+                            </Link>
                         </span>
                     </li>
                     {isLoading ?<div style={{textAlign:"center"}}><img className="App-logo-loading" src={require('../images/logo.svg')}/></div> : loopBerita }
@@ -66,4 +72,4 @@ class BeritaTerkini extends React.Component {
     }
 }
 
-export default BeritaTerkini;
+export default connect('catHeader, listNews, isLoading, selected isLogin',actions)(withRouter(BeritaTerkini));
