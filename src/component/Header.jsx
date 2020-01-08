@@ -1,7 +1,7 @@
 import React from 'react'
 import '../styles/bootstrap.min.css'
 import Search from './Search';
-import {Link, Redirect} from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store";
