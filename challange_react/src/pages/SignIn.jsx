@@ -2,55 +2,45 @@ import React from 'react'
 import Header from '../component/Header'
 import '../styles/bootstrap.min.css'
 import axios from 'axios'
+import { withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
+import { actions, store } from "../store";
 
 class SignIn extends React.Component {
-    state = {
-        catHeader : [
-            'Football',
-            'Economic',
-            'Politic',
-            'Entertainment',
-            'Movie'
-        ],
-        selected : 'Popular',
-        loading : true,
-        email : '',
-        password : ''
-    }
-    
-    cobaClick = async (sesuatu) => {
-        await this.setState({selected : sesuatu})
-        console.log(this.state.selected)
-    }
 
     inputForm = ele => {
-        this.setState({ [ele.target.name]: ele.target.value });    
-      };
+        store.setState({ [ele.target.name]: ele.target.value });    
+    }
     
     postLogin = () => {
-        const {email, password} = this.state
-        console.log('click')
+        const {email, password} = this.props
+        console.log('clickLogin')
         // simpan data login dari form ke state
         const data = {
             inputEmail : email,
             inputPassword : password
         };
+
+        
         const self = this;
+        // AXIOS
         axios
             .post("https://miamiami.free.beeceptor.com/auth", data)
             .then(function(response) {
                 console.log(response.data)
                 if (response.data.hasOwnProperty("api_key")) {
-                    localStorage.setItem('api_key', response.data.api_key)
-                    localStorage.setItem("isLogin", true)
-                    localStorage.setItem("email", response.data.email)
-                    localStorage.setItem("password", response.data.password)
+                    store.setState({api_key : response.data.api_key})
+                    store.setState({isLogin : true})
+                    store.setState({email : response.data.email})
+                    store.setState({password : response.data.password})
                     self.props.history.push('/profile')
                 }
             })
             .catch(function(error){
                 console.log(error)
             }) 
+        // END AXIOS
+
     }
 
     render() {
@@ -59,11 +49,8 @@ class SignIn extends React.Component {
                 <div className="container-fluid">
                     <div className="row">
                         <Header 
-                            {...this.props}
-                            lstCategory={this.state.catHeader} 
-                            cobaClick={this.cobaClick}
-                            keyword={this.state.search}
-                            placeholder="mau cari apa"
+                            lstCategory={this.props.catHeader} 
+                            cobaClick={this.props.cobaClick}
                         />
                     </div>
                 <div className="row">
@@ -90,7 +77,7 @@ class SignIn extends React.Component {
                             />
                             </div>
                             <button 
-                                type="submit" 
+                                type="submit"   
                                 class="btn btn-primary" 
                                 onClick={this.postLogin}
                             >
@@ -99,10 +86,10 @@ class SignIn extends React.Component {
                         </form>
                     </div>
                 </div>
-            </div>
+             </div>
             </React.Fragment>
         )
     }
 }
 
-export default SignIn;
+export default connect('email, password, catHeader', actions)(withRouter(SignIn));

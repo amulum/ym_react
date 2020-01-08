@@ -2,16 +2,31 @@ import React from 'react'
 import '../styles/bootstrap.min.css'
 import Search from './Search';
 import {Link, Redirect} from 'react-router-dom'
+import { withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
+import { actions, store } from "../store";
 
 class Header extends React.Component {
     postSignout = () => {
-        localStorage.removeItem("is_login");
+        try {
+            let is_login  = JSON.parse(localStorage.getItem("isLogin"));
+            if (is_login) {
+                localStorage.removeItem("isLogin");
+                localStorage.removeItem("api_key");
+                localStorage.removeItem("email");
+                localStorage.removeItem("password");
+                this.props.history.push("/");
+        }}
+         catch (error) {
+            console.error(error);
+            alert('BELUM LOGIN NGAPAIN LOGOUT :(')
+            }
         // localStorage.clear()
-        this.props.history.push("/");
-      };
+      }
     clickProfile = async () => {
         try {
             let is_login  = JSON.parse(localStorage.getItem("isLogin"));
+            console.log(is_login)
             if (is_login) {
                 this.props.history.push("/profile")   
         }}
@@ -78,4 +93,4 @@ class Header extends React.Component {
 	}
 }
 
-export default Header;
+export default connect('catHeader, listNews, isLoading',actions)(withRouter(Header));

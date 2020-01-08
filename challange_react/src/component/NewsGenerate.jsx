@@ -1,8 +1,10 @@
 import React from 'react'
-import MainBerita from '../component/MainBerita'
+import MainBerita from './MainBerita'
+import { withRouter } from "react-router-dom";
+import { connect } from "unistore/react";
+import { actions, store } from "../store";
 
-
-class News extends React.Component {
+class NewsGenerate extends React.Component {
 
     render () {
         const { listNews, isLoading } = this.props;
@@ -30,4 +32,4 @@ class News extends React.Component {
 
 }
 
-export default News;
+export default connect('catHeader, listNews, isLoading',actions)(withRouter(NewsGenerate));
