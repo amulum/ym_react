@@ -1,5 +1,7 @@
 import createStore from 'unistore'
 import axios from 'axios'
+import { select } from 'async';
+import { Redirect } from 'react-router-dom'
 const apiKey = '9ea283ba45c54460a0d372ae2612c6bd'
 const baseUrl = 'https://newsapi.org/v2/'
 
@@ -19,20 +21,18 @@ const initialState = {
     ],
 // GENERATE NEWS ELEMENT
     listNews : [],
-    selected : 'Popular',
-    isLoading : true
+    selected : '',
+    isLoading : true,
 };
 
 export const store = createStore(initialState);
 
 export const actions = store => ({
-    cobaClick : async (state,sesuatu) => {
-        await store.setState({selected : sesuatu})
-        store.setState({isLoading: true})
+    // HEADER NAV
+    cobaClick : (state,sesuatu) => {
+        store.setState({ isLoading: true })
         const self = this;
-        console.log(initialState.selected)
-        axios
-        .get(`${baseUrl}/everything?q=${initialState.selected}&sortBy=popularity&pageSize=5&apiKey=${apiKey}`)
+        axios.get(`${baseUrl}/everything?q=${sesuatu}&sortBy=popularity&pageSize=5&apiKey=${apiKey}`)
         .then(function(response) {
             store.setState ({ listNews: response.data.articles, isLoading: false});
             // handle success
@@ -43,25 +43,27 @@ export const actions = store => ({
         })
     },
 
-
     inputChange : async (state,event) => {
-        let value = event.target.value;
-        await store.setState({ search: value });
-        store.cariBerita(value);
+        let keyword = event.target.value;
+        console.log(keyword)
+        if (keyword.length > 3) {
+            store.setState({isLoading: true})
+            try {
+                const response = await axios.get(
+                    baseUrl + "everything?q=" + keyword + "&apiKey=" + apiKey
+                );
+                store.setState({ listNews: response.data.articles, isLoading : false});
+            } catch (error) {
+                console.error(error);
+            }}
+        
     },
-    
-    cariBerita : async (state,keyword) => {
-    const self = this;
-    if (keyword.length > 3) {
-        store.setState({isLoading: true})
-        try {
-            const response = await axios.get(
-                baseUrl + "everything?q=" + keyword + "&apiKey=" + apiKey
-            );
-            self.setState({ listNews: response.data.articles, isLoading : false});
-        } catch (error) {
-            console.error(error);
-        }}
+
+    postSignout : (state) => {
+        store.setState({isLogin : false})
+        store.setState({api_key : ''})
+        store.setState({email : ''})
+        store.setState({password : ''})
     }
 
 });

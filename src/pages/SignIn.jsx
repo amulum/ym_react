@@ -11,7 +11,6 @@ class SignIn extends React.Component {
     inputForm = ele => {
         store.setState({ [ele.target.name]: ele.target.value });    
     }
-    
     postLogin = () => {
         const {email, password} = this.props
         console.log('clickLogin')
@@ -21,11 +20,9 @@ class SignIn extends React.Component {
             inputPassword : password
         };
 
-        
         const self = this;
         // AXIOS
-        axios
-            .post("https://miamiami.free.beeceptor.com/auth", data)
+        axios.post("https://miamiami.free.beeceptor.com/auth", data)
             .then(function(response) {
                 console.log(response.data)
                 if (response.data.hasOwnProperty("api_key")) {
@@ -44,52 +41,68 @@ class SignIn extends React.Component {
     }
 
     render() {
-        return (
-            <React.Fragment>
+        console.log(this.props.isLogin)
+        if (this.props.isLogin){
+            return (
                 <div className="container-fluid">
                     <div className="row">
-                        <Header 
-                            lstCategory={this.props.catHeader} 
-                            cobaClick={this.props.cobaClick}
-                        />
+                            <Header 
+                                lstCategory={this.props.catHeader} 
+                                cobaClick={this.props.cobaClick}/>
                     </div>
-                <div className="row">
-                    <div className="col-8">
-                        <form class="px-4 py-3" onSubmit={ele => ele.preventDefault()}>
-                            <div class="form-group">
-                            <label for="exampleDropdownFormEmail1">Email address</label>
-                            <input 
-                                type="email" 
-                                class="form-control" 
-                                placeholder="email@example.com"
-                                name="email"
-                                onChange={ele => this.inputForm(ele)}
-                            />
-                            </div>
-                            <div class="form-group">
-                            <label for="exampleDropdownFormPassword1">Password</label>
-                            <input 
-                                type="password" 
-                                class="form-control" 
-                                placeholder="Password"
-                                name = "password"
-                                onChange={ele => this.inputForm(ele)}
-                            />
-                            </div>
-                            <button 
-                                type="submit"   
-                                class="btn btn-primary" 
-                                onClick={this.postLogin}
-                            >
-                                Sign in
-                            </button>
-                        </form>
+                    <div className="row">
+                        <div className="col-md-7 d-flex justify-content-center">
+                            <h2>KAMU SUDAH LOGIN</h2>
+                        </div>
                     </div>
                 </div>
-             </div>
-            </React.Fragment>
-        )
+            )
+        } 
+        else {
+            return (
+                <React.Fragment>
+                    <div className="container-fluid">
+                        <div className="row">
+                            <Header 
+                                lstCategory={this.props.catHeader} 
+                                cobaClick={this.props.cobaClick}/>
+                        </div>
+                    <div className="row">
+                        <div className="col-8">
+                            <form class="px-4 py-3" onSubmit={ele => ele.preventDefault()}>
+                                <div class="form-group">
+                                <label for="exampleDropdownFormEmail1">Email address</label>
+                                <input 
+                                    type="email" 
+                                    class="form-control" 
+                                    placeholder="email@example.com"
+                                    name="email"
+                                    onChange={ele => this.inputForm(ele)}/>
+                                </div>
+                                <div class="form-group">
+                                <label for="exampleDropdownFormPassword1">Password</label>
+                                <input 
+                                    type="password" 
+                                    class="form-control" 
+                                    placeholder="Password"
+                                    name = "password"
+                                    onChange={ele => this.inputForm(ele)}/>
+                                </div>
+                                <button 
+                                    type="submit"   
+                                    class="btn btn-primary" 
+                                    onClick={this.postLogin}>
+                                    Sign in
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                 </div>
+                </React.Fragment>
+            )
+
+        }
     }
 }
 
-export default connect('email, password, catHeader', actions)(withRouter(SignIn));
+export default connect('email, password, catHeader, isLogin', actions)(withRouter(SignIn));

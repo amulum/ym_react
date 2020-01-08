@@ -1,41 +1,37 @@
 import React from 'react'
 import Header from '../component/Header'
-import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom"
 import '../styles/bootstrap.min.css'
+import { withRouter } from "react-router-dom"
+import { connect } from "unistore/react"
+import { actions, store } from "../store"
 
 const Profile = props => {
-    const is_login = JSON.parse(localStorage.getItem("isLogin"));
-    const email = localStorage.getItem("email");
-    const password = localStorage.getItem("password");
-    const state = {
-        catHeader : [
-            'Football',
-            'Economic',
-            'Politic',
-            'Entertainment',
-            'Movie'
-        ],
-        selected : 'Popular',
-        loading : true,
-        email : '',
-        password : ''
-    }
-    
-    const cobaClick = async (sesuatu) => {
-        await this.setState({selected : sesuatu})
-        console.log(this.state.selected)
-    }
-
-    if (is_login === null) {
-        return <Redirect to={{ pathname: "/sign-in" }} />;
+    if (props.isLogin === false) {
+        return (
+        <React.Fragment>
+                <div className="container-fluid">
+                    <div className="row">
+                        <Header 
+                            lstCategory={props.catHeader} 
+                            cobaClick={props.cobaClick}
+                            {...props}
+                        />
+                    </div>
+                </div>
+                <div className="row justify-content-center">
+                    <h2 className="text-center"> BELUM LOGIN </h2>
+                </div>                    
+            </React.Fragment>
+        )
     } else {
         return (
             <React.Fragment>
                 <div className="container-fluid">
                     <div className="row">
                         <Header 
-                            lstCategory={state.catHeader} 
-                            cobaClick={cobaClick}
+                            lstCategory={props.catHeader} 
+                            cobaClick={props.cobaClick}
                             {...props}
                         />
                     </div>
@@ -49,10 +45,10 @@ const Profile = props => {
                         Profile
                     </h1>
                     <p>
-                        <label>Email:</label> {email}
+                        <label>Email:</label> {props.email}
                     </p>
                     <p>
-                        <label>Password:</label> {password}
+                        <label>Password:</label> {props.password}
                     </p>
                 </div>
                 
@@ -61,4 +57,4 @@ const Profile = props => {
 }
 };
 
-export default Profile;
+export default connect('catHeader, email, password, isLogin',actions)(withRouter(Profile));

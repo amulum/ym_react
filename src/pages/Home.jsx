@@ -15,7 +15,7 @@ class Home extends React.Component {
     componentDidMount = () => {
         const self = this;
         axios
-        .get(`${baseUrl}/everything?q=${self.props.selected}&sortBy=popularity&pageSize=5&apiKey=${apiKey}`)
+        .get(`${baseUrl}/everything?q=${(self.props.selected === '') ? 'Popular' : self.props.selected  }&sortBy=popularity&pageSize=5&apiKey=${apiKey}`)
         .then(function(response) {
             store.setState ({ listNews: response.data.articles, isLoading: false});
             // handle success
@@ -24,7 +24,6 @@ class Home extends React.Component {
             store.setState({ isLoading : false});
             // error handle
         })
-        console.log(this.props)
     }
 
     render() {
@@ -34,8 +33,7 @@ class Home extends React.Component {
                     <Header 
                         lstCategory={this.props.catHeader} 
                         cobaClick={this.props.cobaClick}
-                        doSearch={(event) => this.inputChange(event)}
-                        keyword={this.props.search}
+                        doSearch={(event) => this.props.inputChange(event)}
                         placeholder="mau cari apa"
                     />
                 </div>
@@ -55,4 +53,4 @@ class Home extends React.Component {
 }
 
 
-export default connect('catHeader, listNews, isLoading',actions)(withRouter(Home));
+export default connect('catHeader, listNews, isLoading, selected',actions)(withRouter(Home));

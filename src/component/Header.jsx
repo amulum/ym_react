@@ -7,37 +7,15 @@ import { connect } from "unistore/react";
 import { actions, store } from "../store";
 
 class Header extends React.Component {
-    postSignout = () => {
-        try {
-            let is_login  = JSON.parse(localStorage.getItem("isLogin"));
-            if (is_login) {
-                localStorage.removeItem("isLogin");
-                localStorage.removeItem("api_key");
-                localStorage.removeItem("email");
-                localStorage.removeItem("password");
-                this.props.history.push("/");
-        }}
-         catch (error) {
-            console.error(error);
-            alert('BELUM LOGIN NGAPAIN LOGOUT :(')
-            }
-        // localStorage.clear()
-      }
-    clickProfile = async () => {
-        try {
-            let is_login  = JSON.parse(localStorage.getItem("isLogin"));
-            console.log(is_login)
-            if (is_login) {
-                this.props.history.push("/profile")   
-        }}
-         catch (error) {
-            console.error(error);
-            alert('LOGIN BOS')
-            }
+    doSignout = () => {
+        if (this.props.isLogin) {
+            this.props.postLogout()
+        } else {
+            this.props.history.push('/')
         }
-
+    }
 	render() {
-        const loopnav = this.props.lstCategory.map(category => (
+        const loopnav =  this.props.lstCategory.map(category => (
             <li class="nav-item">
                 <Link className="nav-link" to={`/category/${category}`} onClick={() => this.props.cobaClick(category)}>
                     {category}
@@ -81,10 +59,10 @@ class Header extends React.Component {
 							<Link to="/sign-in" className="nav-link">Sign In</Link>
 						</li>
 						<li class="nav-item">
-							<Link onClick={this.clickProfile} className="nav-link">Profile</Link>
+							<Link to="profile" className="nav-link">Profile</Link>
 						</li>
 						<li class="nav-item">
-                            <Link onClick={this.postSignout} className="nav-link">Sign Out</Link>
+                            <Link onClick={this.doSignout} className="nav-link">Sign Out</Link>
 						</li>
 					</ul>
 				</div>
@@ -93,4 +71,4 @@ class Header extends React.Component {
 	}
 }
 
-export default connect('catHeader, listNews, isLoading',actions)(withRouter(Header));
+export default connect('catHeader, listNews, isLoading, selected isLogin',actions)(withRouter(Header));
