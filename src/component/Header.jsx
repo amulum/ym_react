@@ -25,8 +25,8 @@ class Header extends React.Component {
 
 		return (
 			<nav class="navbar navbar-expand-lg navbar-light bg-light">
-				<Link to="/" className="navbar-brand">
-					<img className='App-logo' src={require('../images/logo.svg')} width="50px"/><span>KabarKabar</span>
+				<Link to='/' onClick={() => this.props.cobaClick('Popular')}  className="navbar-brand">
+                        <img className='App-logo' src={require('../images/logo.svg')} width="50px"/><span>KabarKabar</span>
                 </Link>
 				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon"></span>
